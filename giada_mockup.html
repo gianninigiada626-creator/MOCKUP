@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giada Giannini — Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://db.onlinewebfonts.com/c/d657d7d101ab20c57a9d4c4f603f10ee?family=Jelek+Type" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body {
+  background: #0a0a0a;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Space Mono', monospace;
+}
+
+/* SCENE — superficie fotografata dall'alto leggermente angolata */
+.scene {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(40,35,30,.9) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(25,20,15,.8) 0%, transparent 50%),
+    #111008;
+}
+
+/* SURFACE texture legno/marmo scuro */
+.scene::before {
+  content:'';
+  position:absolute;inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='4'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+/* LIGHT — luce dall'alto a sinistra */
+.scene::after {
+  content:'';
+  position:absolute;inset:0;
+  background: radial-gradient(ellipse at 20% 15%, rgba(255,245,230,.06) 0%, transparent 50%);
+  pointer-events:none;
+}
+
+/* BOOK WRAPPER — leggera prospettiva */
+.book-wrap {
+  position: relative;
+  transform: perspective(1200px) rotateX(4deg) rotateY(-2deg);
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 60px 80px rgba(0,0,0,.85)) drop-shadow(0 20px 40px rgba(0,0,0,.6));
+}
+
+/* BOOK SPREAD */
+.spread {
+  width: 1400px;
+  height: 790px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  border-radius: 3px 3px 3px 3px;
+  overflow: hidden;
+}
+
+/* GUTTER — centro libro con ombra e curvatura */
+.gutter {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 100%;
+  z-index: 100;
+  background: linear-gradient(to right,
+    rgba(0,0,0,.0) 0%,
+    rgba(0,0,0,.35) 30%,
+    rgba(0,0,0,.55) 48%,
+    rgba(0,0,0,.55) 52%,
+    rgba(0,0,0,.35) 70%,
+    rgba(0,0,0,.0) 100%
+  );
+  pointer-events: none;
+}
+
+/* PAGINA SINISTRA */
+.page-left {
+  background: #0d0d0d;
+  position: relative;
+  overflow: hidden;
+  /* leggera curvatura verso il gutter */
+  transform-origin: right center;
+}
+
+/* carta texture sinistra */
+.page-left::after {
+  content:'';
+  position:absolute;inset:0;
+  background: linear-gradient(to right, rgba(255,255,255,.02) 0%, transparent 40%);
+  pointer-events:none;z-index:20;
+}
+
+/* FOTO PRINCIPALE sinistra — full bleed */
+.pl-photo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.pl-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.08) saturate(.85);
+}
+
+/* overlay gradiente sinistra */
+.pl-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0,0,0,.15) 0%,
+    transparent 40%,
+    rgba(0,0,0,.4) 100%
+  );
+  z-index: 5;
+}
+
+/* testo grande in basso sinistra */
+.pl-text {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  right: 20px;
+  z-index: 10;
+}
+.pl-title {
+  font-family: 'Jelek Type', 'Bebas Neue', sans-serif;
+  font-size: 72px;
+  line-height: .82;
+  color: #f0ebe2;
+  letter-spacing: -.01em;
+}
+.pl-title .red { color: #8B1A1A; }
+.pl-sub {
+  font-size: 9px;
+  letter-spacing: .28em;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pl-sub::before { content:''; width: 24px; height: 1px; background: rgba(255,255,255,.3); }
+
+/* running header sinistra */
+.pl-header {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding-bottom: 10px;
+}
+.pl-header span {
+  font-size: 8px;
+  letter-spacing: .25em;
+  color: rgba(255,255,255,.25);
+  text-transform: uppercase;
+}
+
+/* foto piccola sovrapposta */
+.pl-photo2 {
+  position: absolute;
+  top: 80px;
+  right: 28px;
+  width: 180px;
+  height: 220px;
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: 4px 4px 20px rgba(0,0,0,.5);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.pl-photo2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* grunge lines */
+.pl-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,.04);
+  z-index: 8;
+}
+
+/* PAGINA DESTRA */
+.page-right {
+  background: #e8e2d2;
+  position: relative;
+  overflow: hidden;
+  transform-origin: left center;
+}
+
+/* carta texture destra */
+.page-right::before {
+  content:'';
+  position:absolute;inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1;
+}
+
+/* luce sulla pagina destra */
+.page-right::after {
+  content:'';
+  position:absolute;inset:0;
+  background: 
+    linear-gradient(to right, rgba(0,0,0,.08) 0%, transparent 15%),
+    linear-gradient(to bottom, rgba(255,255,255,.04) 0%, transparent 30%);
+  pointer-events:none;z-index:2;
+}
+
+/* running header destra */
+.pr-header {
+  position: absolute;
+  top: 24px;
+  left: 20px;
+  right: 32px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding-bottom: 10px;
+}
+.pr-header span {
+  font-size: 8px;
+  letter-spacing: .25em;
+  color: rgba(0,0,0,.3);
+  text-transform: uppercase;
+}
+
+/* foto destra grande */
+.pr-photo {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  right: 180px;
+  height: 380px;
+  overflow: hidden;
+  z-index: 5;
+  box-shadow: 3px 3px 16px rgba(0,0,0,.2);
+}
+.pr-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.9);
+}
+
+/* foto piccola destra */
+.pr-photo2 {
+  position: absolute;
+  top: 60px;
+  right: 28px;
+  width: 148px;
+  height: 180px;
+  overflow: hidden;
+  z-index: 5;
+  box-shadow: 3px 3px 12px rgba(0,0,0,.15);
+}
+.pr-photo2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.85) contrast(1.05);
+}
+
+/* foto terza destra */
+.pr-photo3 {
+  position: absolute;
+  top: 250px;
+  right: 28px;
+  width: 148px;
+  height: 190px;
+  overflow: hidden;
+  z-index: 5;
+  box-shadow: 3px 3px 12px rgba(0,0,0,.15);
+}
+.pr-photo3 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* testo corpo destra */
+.pr-body {
+  position: absolute;
+  top: 456px;
+  left: 20px;
+  right: 32px;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.pr-body-col {
+  font-family: 'Georgia', serif;
+  font-size: 10.5px;
+  line-height: 1.85;
+  color: #3a3530;
+  letter-spacing: .01em;
+}
+.pr-body-col .drop-cap {
+  font-family: 'Jelek Type', 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  float: left;
+  line-height: .75;
+  margin-right: 6px;
+  margin-top: 6px;
+  color: #8B1A1A;
+}
+
+/* tag label destra */
+.pr-tag {
+  position: absolute;
+  bottom: 28px;
+  left: 20px;
+  z-index: 10;
+  font-size: 8px;
+  letter-spacing: .28em;
+  color: #8B1A1A;
+  text-transform: uppercase;
+  border: 1px solid #8B1A1A;
+  padding: 4px 12px;
+}
+
+/* numero pagina */
+.pr-pgnum {
+  position: absolute;
+  bottom: 28px;
+  right: 32px;
+  z-index: 10;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(0,0,0,.3);
+  letter-spacing: .15em;
+}
+
+/* GRAIN OVERLAY finale */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  border-radius: 3px;
+}
+
+/* ombra curl pagine in basso */
+.page-curl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,.3));
+  z-index: 150;
+  pointer-events: none;
+}
+
+/* CAPTION sotto il libro */
+.caption {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: .3em;
+  color: rgba(255,255,255,.2);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* NAV dots per cambiare spread */
+.spread-nav {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 300;
+}
+.sn-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  border: none;
+  cursor: pointer;
+  transition: background .3s, transform .3s;
+}
+.sn-dot.on {
+  background: rgba(255,255,255,.7);
+  transform: scale(1.4);
+}
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <div class="book-wrap">
+    <div class="spread" id="spread">
+
+      <!-- GUTTER -->
+      <div class="gutter"></div>
+
+      <!-- ══ PAGINA SINISTRA ══ -->
+      <div class="page-left">
+        <div class="pl-header">
+          <span>Giada Giannini · Creative Direction</span>
+          <span>Brand Direction</span>
+        </div>
+        <div class="pl-photo" id="pl-main">
+          <img src="https://bdbkedxqlvgquuzcilcr.supabase.co/storage/v1/object/public/magazine/IMG_1617.png" alt="" id="img-left-main">
+        </div>
+        <div class="pl-overlay"></div>
+        <div class="pl-photo2" id="pl-small">
+          <img src="https://bdbkedxqlvgquuzcilcr.supabase.co/storage/v1/object/public/magazine/IMG_1612.png" alt="" id="img-left-small">
+        </div>
+        <div class="pl-line" style="top:45%"></div>
+        <div class="pl-text">
+          <div class="pl-title" id="pl-title-text">VISUAL<br>WORLDS.<span class="red">*</span></div>
+          <div class="pl-sub" id="pl-sub-text">Brand Direction · AI-Driven Campaigns</div>
+        </div>
+        <div class="grain-overlay"></div>
+        <div class="page-curl"></div>
+      </div>
+
+      <!-- ══ PAGINA DESTRA ══ -->
+      <div class="page-right">
+        <div class="pr-header">
+          <span>Issue 01 · 2026</span>
+          <span>Giada Giannini</span>
+        </div>
+        <div class="pr-photo" id="pr-main">
+          <img src="https://bdbkedxqlvgquuzcilcr.supabase.co/storage/v1/object/public/magazine/IMG_1609.png" alt="" id="img-right-main">
+        </div>
+        <div class="pr-photo2" id="pr-small1">
+          <img src="https://bdbkedxqlvgquuzcilcr.supabase.co/storage/v1/object/public/magazine/IMG_1620.png" alt="" id="img-right-s1">
+        </div>
+        <div class="pr-photo3" id="pr-small2">
+          <img src="https://bdbkedxqlvgquuzcilcr.supabase.co/storage/v1/object/public/magazine/IMG_1629.png" alt="" id="img-right-s2">
+        </div>
+        <div class="pr-body">
+          <div class="pr-body-col">
+            <span class="drop-cap">I</span> start with one question: what does this brand actually believe? Not what it sells. Not what its competitors do. What it believes.<br><br>From there — visual identity, campaign concept, color language, casting direction, production.
+          </div>
+          <div class="pr-body-col">
+            Everything built around a single cultural thesis that holds across every touchpoint.<br><br>No moodboards without meaning. No aesthetics without argument. No campaigns without a clear point of view.
+          </div>
+        </div>
+        <div class="pr-tag" id="pr-tag-text">Brand · Campaign Direction</div>
+        <div class="pr-pgnum">04</div>
+        <div class="grain-overlay"></div>
+        <div class="page-curl"></div>
+      </div>
+
+    </div><!-- /spread -->
+  </div><!-- /book-wrap -->
+
+  <!-- NAV -->
+  <div class="spread-nav" id="snav"></div>
+
+</div><!-- /scene -->
+
+<script>
+const SUPA = 'https://bdbkedxqlvgquuzcilcr.supabase.co/storage/v1/object/public/magazine/';
+
+const spreads = [
+  {
+    leftMain: 'IMG_1617.png',
+    leftSmall: 'IMG_1612.png',
+    leftTitle: 'VISUAL<br>WORLDS.<span style="color:#8B1A1A">*</span>',
+    leftSub: 'Brand Direction · AI-Driven Campaigns',
+    rightMain: 'IMG_1609.png',
+    rightS1: 'IMG_1620.png',
+    rightS2: 'IMG_1629.png',
+    tag: 'Brand · Campaign Direction',
+    pg: '04'
+  },
+  {
+    leftMain: 'IMG_1607.png',
+    leftSmall: 'IMG_1626.png',
+    leftTitle: 'I BUILD<br>WORLDS.<span style="color:#8B1A1A">*</span>',
+    leftSub: 'Artist Direction · Visual Identity',
+    rightMain: 'IMG_1616.png',
+    rightS1: 'IMG_1627.png',
+    rightS2: 'IMG_1632.png',
+    tag: 'Artist · Music · Culture',
+    pg: '08'
+  },
+  {
+    leftMain: 'IMG_1635.png',
+    leftSmall: 'IMG_1619.png',
+    leftTitle: 'NO RULES<br>LEFT.<span style="color:#8B1A1A">*</span>',
+    leftSub: 'AI Production · Creative Process',
+    rightMain: 'IMG_1641.png',
+    rightS1: 'IMG_1640.png',
+    rightS2: 'IMG_1624.png',
+    tag: 'AI · Process · Production',
+    pg: '14'
+  },
+  {
+    leftMain: 'IMG_1606.png',
+    leftSmall: 'IMG_1614.png',
+    leftTitle: 'RADICAL<br>SIMPLICITY.<span style="color:#8B1A1A">*</span>',
+    leftSub: 'Personal Projects · Portfolio',
+    rightMain: 'IMG_1611.png',
+    rightS1: 'IMG_1637.png',
+    rightS2: 'IMG_1627.png',
+    tag: 'Portfolio · Personal Work',
+    pg: '18'
+  }
+];
+
+let cur = 0;
+const snav = document.getElementById('snav');
+
+spreads.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'sn-dot' + (i===0?' on':'');
+  d.onclick = () => goTo(i);
+  snav.appendChild(d);
+});
+
+function goTo(n) {
+  snav.children[cur].classList.remove('on');
+  cur = n;
+  snav.children[cur].classList.add('on');
+  const s = spreads[cur];
+
+  // animate transition
+  const spread = document.getElementById('spread');
+  spread.style.opacity = '0';
+  spread.style.transition = 'opacity .3s ease';
+
+  setTimeout(() => {
+    document.getElementById('img-left-main').src = SUPA + s.leftMain;
+    document.getElementById('img-left-small').src = SUPA + s.leftSmall;
+    document.getElementById('pl-title-text').innerHTML = s.leftTitle;
+    document.getElementById('pl-sub-text').textContent = s.leftSub;
+    document.getElementById('img-right-main').src = SUPA + s.rightMain;
+    document.getElementById('img-right-s1').src = SUPA + s.rightS1;
+    document.getElementById('img-right-s2').src = SUPA + s.rightS2;
+    document.getElementById('pr-tag-text').textContent = s.tag;
+    document.querySelector('.pr-pgnum').textContent = s.pg;
+    spread.style.opacity = '1';
+  }, 300);
+}
+
+// keyboard nav
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight') goTo((cur+1) % spreads.length);
+  if(e.key === 'ArrowLeft') goTo((cur-1+spreads.length) % spreads.length);
+});
+
+// touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if(Math.abs(dx) > 40) goTo(dx < 0 ? (cur+1)%spreads.length : (cur-1+spreads.length)%spreads.length);
+});
+</script>
+</body>
+</html>
